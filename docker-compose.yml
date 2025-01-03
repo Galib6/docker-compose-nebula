@@ -31,7 +31,7 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=galib
       - MONGO_INITDB_ROOT_PASSWORD=123456
-    restart: unless-stopped
+    restart: always
     ports:
       - "27017:27017"
     volumes:
@@ -53,7 +53,7 @@ services:
       - ME_CONFIG_BASICAUTH_PASSWORD=123456
     links:
       - mongo
-    restart: unless-stopped
+    restart: always
     ports:
       - "8081:8081"
     networks:
@@ -61,6 +61,7 @@ services:
 
   redis-stack:
     image: redis/redis-stack:latest
+    restart: always
     container_name: redis-stack
     environment:
       - REDIS_PASSWORD=123456
