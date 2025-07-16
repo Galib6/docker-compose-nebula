@@ -18,6 +18,8 @@ services:
     container_name: adminer
     image: adminer:latest
     restart: always
+    environment:
+      - ADMINER_DESIGN=pepa-linha
     depends_on:
       - postgres
     ports:
@@ -64,7 +66,9 @@ services:
     restart: always
     container_name: redis-stack
     environment:
-      - REDIS_PASSWORD=123456
+      - REDIS_ARGS=--requirepass 123456 --user default off --user galib on >123456 ~* &* +@all
+      - REDISINSIGHT_HOST=0.0.0.0
+      - REDISINSIGHT_PORT=8001
     ports:
       - "6379:6379" # Redis server
       - "8001:8001" # RedisInsight
