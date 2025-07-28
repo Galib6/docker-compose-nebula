@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 services:
   postgres:
     container_name: postgres
@@ -61,19 +61,23 @@ services:
     networks:
       - nebula-network
 
-  redis-stack:
-    image: redis/redis-stack:latest
-    restart: always
-    container_name: redis-stack
-    environment:
-      - REDIS_ARGS=--requirepass 123456 --user default off --user galib on >123456 ~* &* +@all
-      - REDISINSIGHT_HOST=0.0.0.0
-      - REDISINSIGHT_PORT=8001
+  redis-tls:
+    image: redis:7-alpine
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     ports:
-      - "6379:6379" # Redis server
-      - "8001:8001" # RedisInsight
+      - "6381:6381"
     volumes:
-      - ./data/redis:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./redis/certs:/certs
+    restart: unless-stopped
+    networks:
+      - nebula-network
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    ports:
+      - "5540:5540"
+    restart: unless-stopped
     networks:
       - nebula-network
 
