@@ -80,7 +80,6 @@ services:
     restart: unless-stopped
     networks:
       - nebula-network
-
 volumes:
   db:
     driver: local
