@@ -61,14 +61,11 @@ services:
     networks:
       - nebula-network
 
-  redis-tls:
+  redis:
     image: redis:7-alpine
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    container_name: redis
     ports:
-      - "6381:6381"
-    volumes:
-      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
-      - ./redis/certs:/certs
+      - "6380:6379"
     restart: unless-stopped
     networks:
       - nebula-network
